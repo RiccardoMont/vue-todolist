@@ -1,30 +1,119 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
+<script>
+export default {
+  name: 'App',
+  data() {
+    return {
+      spesa: [
+        {
+          showElement: true,
+          text: 'Pomodoro',
+          done: false
+        },
+        {
+          showElement: true,
+          text: 'Peperoni',
+          done: false
+        },
+        {
+          showElement: true,
+          text: 'Pollo',
+          done: false
+        },
+        {
+          showElement: true,
+          text: 'Curry',
+          done: false
+        },
+        {
+          showElement: true,
+          text: 'Paprika',
+          done: false
+        },
+        {
+          showElement: true,
+          text: 'Aglio',
+          done: false
+        },
+        {
+          showElement: true,
+          text: 'Olio',
+          done: false
+        },
+        {
+          showElement: true,
+          text: 'Salsa di soia',
+          done: false
+        },
+        {
+          showElement: true,
+          text: 'Latte di cocco',
+          done: false
+        },
+        {
+          showElement: true,
+          text: 'Salvia',
+          done: false
+        },
+        {
+          showElement: true,
+          text: 'Piadine',
+          done: false
+        }
+      ]
+    }
+  },
+  methods: {
+    smarcare(index) {
+
+      if (this.spesa[index].done === false) {
+
+        this.spesa[index].done = true;
+
+      } else {
+
+        this.spesa[index].done = false;
+
+      }
+
+    },
+    mostrare(index) {
+
+      if (this.spesa[index].showElement === true) {
+
+        this.spesa[index].showElement = false;
+
+      }
+    }
+  }
+}
+
+
 </script>
 
 <template>
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <h1>Stasera devo fare il pollo al curry</h1>
+    <h3>Lista della spesa:</h3>
+    <ul>
+      <li v-for="(elemento, index) in spesa" :class="elemento.done === false ? '' : 'marked'"
+        v-show="elemento.showElement"><input type="checkbox" @change="smarcare(index)"> {{ elemento.text }}
+        <font-awesome-icon class="red" icon="fa-solid fa-x" @click="mostrare(index)" /></li>
+    </ul>
+
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+<style>
+ul {
+  text-align: left;
+  list-style: none;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+.marked {
+  text-decoration: line-through;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+.red {
+  color: red;
 }
 </style>
