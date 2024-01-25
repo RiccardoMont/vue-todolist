@@ -65,7 +65,7 @@ export default {
   methods: {
     smarcare(index) {
 
-      if (this.spesa[index].done === false) {
+      if (!this.spesa[index].done) {
 
         this.spesa[index].done = true;
 
@@ -78,7 +78,7 @@ export default {
     },
     mostrare(index) {
 
-      if (this.spesa[index].showElement === true) {
+      if (this.spesa[index].showElement) {
 
         this.spesa[index].showElement = false;
 
@@ -95,9 +95,10 @@ export default {
     <h1>Stasera devo fare il pollo al curry</h1>
     <h3>Lista della spesa:</h3>
     <ul>
-      <li v-for="(elemento, index) in spesa" :class="elemento.done === false ? '' : 'marked'"
+      <li v-for="(elemento, index) in spesa" :class="!elemento.done ? '' : 'marked'"
         v-show="elemento.showElement"><input type="checkbox" @change="smarcare(index)"> {{ elemento.text }}
-        <font-awesome-icon class="red" icon="fa-solid fa-x" @click="mostrare(index)" /></li>
+        <font-awesome-icon class="red" icon="fa-solid fa-x" @click="mostrare(index)" />
+      </li>
     </ul>
 
   </div>
