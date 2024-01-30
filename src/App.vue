@@ -3,6 +3,11 @@ export default {
   name: 'App',
   data() {
     return {
+        newElement: {
+          showElement: true,
+          testo: '',
+          done: false
+        },
       spesa: [
         {
           showElement: true,
@@ -65,15 +70,7 @@ export default {
   methods: {
     smarcare(index) {
 
-      if (!this.spesa[index].done) {
-
-        this.spesa[index].done = true;
-
-      } else {
-
-        this.spesa[index].done = false;
-
-      }
+      this.spesa[index].done = !this.spesa[index].done;
 
     },
     mostrare(index) {
@@ -82,6 +79,30 @@ export default {
 
         this.spesa[index].showElement = false;
 
+      }
+    },
+    add(){
+      if(this.newElement.text != 0){
+      
+      console.log(this.newElement);
+      
+      console.log(this.newElement.text);
+      this.newElement['text'] = this.newElement['testo'];
+      delete this.newElement['testo'];
+      this.spesa.push(this.newElement);
+      console.log(this.newElement);
+      console.log(this.spesa);
+      
+     
+
+        //const last = this.spesa[this.spesa.length - 1];
+        //if(last.text != this.testo){
+          
+
+        //this.newItem.text = this.testo;
+        //this.spesa.push(this.newItem);
+        //console.log(this.spesa);
+        //}
       }
     }
   }
@@ -95,11 +116,17 @@ export default {
     <h1>Stasera devo fare il pollo al curry</h1>
     <h3>Lista della spesa:</h3>
     <ul>
-      <li v-for="(elemento, index) in spesa" :class="!elemento.done ? '' : 'marked'"
-        v-show="elemento.showElement"><input type="checkbox" @change="smarcare(index)"> {{ elemento.text }}
+      <li v-for="(elemento, index) in spesa" :class="!elemento.done ? '' : 'marked'" v-show="elemento.showElement" ><input
+          type="checkbox" @change="smarcare(index)"> {{ elemento.text }}
         <font-awesome-icon class="red" icon="fa-solid fa-x" @click="mostrare(index)" />
       </li>
     </ul>
+    <br>
+    <div id="adding">
+      <input @keyup.enter="add" type="text" id="newItem" v-model="newElement.testo">
+      <button @click="add">Aggiungi</button>
+    </div>
+
 
   </div>
 </template>
@@ -117,4 +144,19 @@ ul {
 .red {
   color: red;
 }
+
+#adding{
+  display: flex;
+  justify-content: space-around;
+}
+
+#newItem {
+  border-radius: 8px;
+  border: 1px solid rgb(96, 96, 96);
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+}
+
+
 </style>
