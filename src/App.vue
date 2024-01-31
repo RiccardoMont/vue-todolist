@@ -3,11 +3,12 @@ export default {
   name: 'App',
   data() {
     return {
-        newElement: {
-          showElement: true,
-          testo: '',
-          done: false
-        },
+      newElement: {
+        showElement: true,
+        text: '',
+        done: false
+      },
+      emptyCase: false,
       spesa: [
         {
           showElement: true,
@@ -71,6 +72,7 @@ export default {
     smarcare(index) {
 
       this.spesa[index].done = !this.spesa[index].done;
+      console.log('ecco');
 
     },
     mostrare(index) {
@@ -81,34 +83,24 @@ export default {
 
       }
     },
-    add(){
-      if(this.newElement.text != 0){
-      
-      console.log(this.newElement);
-      
-      console.log(this.newElement.text);
-      this.newElement['text'] = this.newElement['testo'];
-      delete this.newElement['testo'];
-      this.spesa.push(this.newElement);
-      console.log(this.newElement);
-      console.log(this.spesa);
-      
-     
+    add() {
 
-        //const last = this.spesa[this.spesa.length - 1];
-        //if(last.text != this.testo){
-          
+      if (this.newElement.text.trim().length === 0) {
 
-        //this.newItem.text = this.testo;
-        //this.spesa.push(this.newItem);
-        //console.log(this.spesa);
-        //}
+        this.emptyCase = true;
+        console.log("The string is empty");
+
+      } else {
+
+        this.emptyCase = false;
+        const newObj = { ...this.newElement };
+        this.spesa.push(newObj);
+        this.newElement.text = '';
+
       }
     }
   }
 }
-
-
 </script>
 
 <template>
@@ -116,18 +108,17 @@ export default {
     <h1>Stasera devo fare il pollo al curry</h1>
     <h3>Lista della spesa:</h3>
     <ul>
-      <li v-for="(elemento, index) in spesa" :class="!elemento.done ? '' : 'marked'" v-show="elemento.showElement" ><input
-          type="checkbox" @change="smarcare(index)"> {{ elemento.text }}
+      <li v-for="(elemento, index) in spesa" :class="!elemento.done ? '' : 'marked'" v-show="elemento.showElement" @click="smarcare(index)"><input
+          type="checkbox" v-model="elemento.done"> {{ elemento.text }}
         <font-awesome-icon class="red" icon="fa-solid fa-x" @click="mostrare(index)" />
       </li>
     </ul>
     <br>
     <div id="adding">
-      <input @keyup.enter="add" type="text" id="newItem" v-model="newElement.testo">
+      <input @keyup.enter="add" type="text" id="newItem" v-model="newElement.text">
       <button @click="add">Aggiungi</button>
     </div>
-
-
+    <p v-show="emptyCase">Inserire del testo valido</p>
   </div>
 </template>
 
@@ -145,9 +136,9 @@ ul {
   color: red;
 }
 
-#adding{
+#adding {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 #newItem {
@@ -158,5 +149,8 @@ ul {
   font-weight: 500;
 }
 
-
+p {
+  color: red;
+  text-align: start;
+}
 </style>
